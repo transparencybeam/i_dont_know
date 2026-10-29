@@ -1,67 +1,60 @@
 import Image from "next/image";
-import { ArrowUpRightIcon, TriangleIcon } from "lucide-react";
+import Link from "next/link";
+import { BookOpenIcon } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+const HOW_TO_PLAY = [
+  "마우스(터치, 방향키)로 찌를 움직여 물고기를 피하며 깊이 내려갑니다.",
+  "물고기에 닿으면 올라오기 시작합니다.",
+  "올라오는 동안 닿은 것도 모두 잡히며, 최대 7마리까지 잡을 수 있습니다.",
+  "깊이 내려갈수록 새로운 물고기가 나옵니다. 바위와 해초도 잡힙니다.",
+];
 
 export default function Home() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center px-6 py-24">
-      <div className="flex w-full max-w-xl flex-col gap-10">
+    <main className="relative flex flex-1 flex-col items-center justify-center gap-8 px-6 py-24">
+      <Link
+        href="/dex"
+        className={cn(
+          buttonVariants({ variant: "outline" }),
+          "absolute top-4 right-4"
+        )}
+      >
+        <BookOpenIcon data-icon="inline-start" />
+        도감
+      </Link>
+      <div className="flex flex-col items-center gap-6">
         <Image
-          className="h-5 w-[100px] dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
+          src="/fish/fish_orange.png"
+          alt="주황색 물고기"
+          width={128}
+          height={128}
           priority
         />
-        <div className="flex flex-col gap-4">
-          <h1 className="font-heading text-3xl font-semibold tracking-tight text-balance">
-            To get started, edit the{" "}
-            <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.9em]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-foreground underline underline-offset-4"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-foreground underline underline-offset-4"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <a
-            className={buttonVariants({ size: "lg" })}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <TriangleIcon data-icon="inline-start" />
-            Deploy Now
-          </a>
-          <a
-            className={buttonVariants({ size: "lg", variant: "outline" })}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-            <ArrowUpRightIcon data-icon="inline-end" />
-          </a>
-        </div>
+        <h1 className="font-heading text-3xl font-semibold tracking-tight">
+          물고기 낚시
+        </h1>
       </div>
+      <div className="flex gap-3">
+        <Link href="/game?mode=slow" className={buttonVariants({ size: "lg" })}>
+          시작하기 (느림)
+        </Link>
+        <Link href="/game?mode=fast" className={buttonVariants({ size: "lg" })}>
+          시작하기 (빠름)
+        </Link>
+      </div>
+      <section aria-labelledby="how-to-play" className="flex max-w-sm flex-col gap-2">
+        <h2 id="how-to-play" className="text-sm font-medium">
+          게임 방법
+        </h2>
+        <ul className="flex list-disc flex-col gap-1 pl-5 text-sm text-muted-foreground">
+          {HOW_TO_PLAY.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
+      </section>
     </main>
   );
 }
